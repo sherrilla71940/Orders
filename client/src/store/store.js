@@ -1,4 +1,4 @@
-import { createStore, combineReducers } from 'redux'
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
 
 const initialState = []
 
@@ -35,6 +35,6 @@ const reducers = combineReducers({
   orders
 });
 
-const store = createStore(reducers)
+const store = configureStore({ reducer: reducers })
 
 export default store;

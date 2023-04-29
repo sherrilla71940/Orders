@@ -8,7 +8,7 @@ import { addOrder } from "../../store/actions";
 
 export default function AddOrder() {
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const dispatch = useDispatch();
 
   // handling multi-line forms with one single handleChange function for each input type
@@ -35,8 +35,8 @@ export default function AddOrder() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    // const baseUrl = 'http://localhost:3000'
-    const baseUrl = import.meta.env.VITE_BASE_URL
+    const baseUrl = 'http://localhost:3000'
+    // const baseUrl = import.meta.env.VITE_BASE_URL
 
     const postOrder = async (order) => {
       const response = await fetch(baseUrl + '/orders', {
@@ -120,7 +120,7 @@ export default function AddOrder() {
           <button
             type='button'
             className={styles.cancelButton}
-            onClick={() => navigate('/orders')}
+            // onClick={() => navigate('/orders')}
           >
             Cancel
           </button>

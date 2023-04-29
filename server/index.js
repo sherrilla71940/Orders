@@ -14,10 +14,10 @@ const port = 3000
 
 app.use(cors(
   {
-  origin: [process.env.DASHBOARD_CLIENT, process.env.TRAMONTO_LOCALHOST, process.env.TRAMONTO_127],
-  // origin: '*',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
+  // origin: [process.env.DASHBOARD_CLIENT, process.env.TRAMONTO_LOCALHOST, process.env.TRAMONTO_127],
+  // // origin: '*',
+  // methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  // credentials: true,
   }
 ))
 app.use(cookieParser())
