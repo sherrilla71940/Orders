@@ -9,7 +9,7 @@
   /* width: fit-content; */
   min-width: 160px;
   width: 160px;
-  height: calc(100vh - 150px);
+  /* height: calc(100vh - 150px); */
   margin: 150px 0px 0px 0px;
   padding: 0 40px;
 
