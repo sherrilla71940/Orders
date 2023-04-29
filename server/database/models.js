@@ -33,7 +33,8 @@ userSchema.statics.login = async function (email, password) {
 }
 
 const orderSchema = new mongoose.Schema({
-  id: Number,
+  // aaron: Mongoose automatically creates an _id for us, so I commented line below out
+  // id: Number,
   ourClient: String,
   date: Date,
   quantity: Number,

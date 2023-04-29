@@ -2,10 +2,17 @@ const { getAll, postOne, updateOne, createUser, logInUser } = require('../model/
 const jwt = require('jsonwebtoken')
 
 // create token
-const maxAge = 3 * 24 * 60 * 60;
+// const maxAge = 3 * 24 * 60 * 60;
+// const createToken = (id) => {
+//   return jwt.sign({ id }, 'secret', {
+//     // expiresIn: maxAge
+//   })
+// }
+// aaron: changing creatToken
 const createToken = (id) => {
   return jwt.sign({ id }, 'secret', {
-    // expiresIn: maxAge
+    expiresIn: "3hr",
+    algorithm: "HS256"
   })
 }
 
@@ -46,6 +53,8 @@ const putOrder = async (req, res) => {
 
 const signUp = async (req, res) => {
   const { email, password } = req.body;
+  // console.log(req.body)
+  console.log('reached controller')
   let responseUser;
   try {
     responseUser = await createUser(email, password)
@@ -56,7 +65,9 @@ const signUp = async (req, res) => {
       res.cookie('jwt', token, {
         httpOnly: true,
         sameSite: 'none',
-        secure: true,
+        // aaron: Not running in https so turning secure to false
+        // secure: true,
+        secure: false
         // maxAge: maxAge * 1000
       })
       res.json({ user: responseUser._id })
@@ -82,7 +93,9 @@ const logIn = async (req, res) => {
       res.cookie('jwt', token, {
         httpOnly: true,
         sameSite: 'none',
-        secure: true,
+        // aaron: changing secure to false
+        // secure: true,
+        secure: false
         // maxAge: maxAge * 1000
       })
       res.json({ user: response._id })

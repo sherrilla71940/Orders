@@ -82,6 +82,10 @@ const updateOne = async (idAndField) => {
   // const doc = Orders.findOne({id: 1})
 
   const [keys, values] = Object.entries(idAndField);
+  // aaron: above line won't correctly store keys of object in keys, and values of object in values
+  // it would simply make keys = index[0] of key value pair from Object.entries, and values = index[1]
+  // considering writing tests before refactoring
+
   // console.log('in the model: ', keys, values)
 
   // finding the document and saving it is the best supported method for updating docs.
