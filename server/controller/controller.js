@@ -58,6 +58,7 @@ const signUp = async (req, res) => {
   let responseUser;
   try {
     responseUser = await createUser(email, password)
+    console.log('responseuser', responseUser)
 
     if (responseUser._id) {
       const token = createToken(responseUser._id)
@@ -67,6 +68,7 @@ const signUp = async (req, res) => {
         sameSite: 'none',
         // aaron: Not running in https so turning secure to false
         // secure: true,
+        // currently not making client store cookie
         secure: false
         // maxAge: maxAge * 1000
       })
@@ -83,8 +85,11 @@ const signUp = async (req, res) => {
 
 const logIn = async (req, res) => {
   const { email, password } = req.body
+  console.log('login reached', req.body)
   try {
     const response = await logInUser(email, password)
+
+    // console.log(response)
 
     if (response._id) {
 
@@ -98,11 +103,14 @@ const logIn = async (req, res) => {
         secure: false
         // maxAge: maxAge * 1000
       })
+      // console.log(res.get('Set-Cookie'))
       res.json({ user: response._id })
+      // res.json({ user: res.cookie })
     } else {
       res.json({ response })
     }
   } catch (error) {
+    console.log(error)
     res.status(400)
     res.json(error) // ?
   }
