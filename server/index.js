@@ -12,14 +12,14 @@ const port = 3000
 // http://127.0.0.1:3001 -> this is the same as the above one, but 127 instead of localhost
 // https://6447f81edc891f0aae69e72d--deft-biscochitos-b655e1.netlify.app this is Tramonto deployed, it is not fetching the dashboard, which is not deployed
 
-app.use(cors(
-  {
+const corsConfig = {
   origin: [process.env.DASHBOARD_CLIENT, process.env.TRAMONTO_LOCALHOST, process.env.TRAMONTO_127],
   // origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
-  }
-))
+}
+
+app.use(cors(corsConfig))
 app.use(cookieParser())
 app.use(express.json())
 app.use(router)

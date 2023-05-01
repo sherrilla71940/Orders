@@ -1,17 +1,10 @@
 const { getAll, postOne, updateOne, createUser, logInUser } = require('../model/model')
 const jwt = require('jsonwebtoken')
 
-// create token
-// const maxAge = 3 * 24 * 60 * 60;
-// const createToken = (id) => {
-//   return jwt.sign({ id }, 'secret', {
-//     // expiresIn: maxAge
-//   })
-// }
-// aaron: changing creatToken
+
 const createToken = (id) => {
   return jwt.sign({ id }, 'secret', {
-    expiresIn: "3hr",
+    expiresIn: "1d",
     algorithm: "HS256"
   })
 }
@@ -66,10 +59,10 @@ const signUp = async (req, res) => {
       res.cookie('jwt', token, {
         httpOnly: true,
         sameSite: 'none',
-        // aaron: Not running in https so turning secure to false
-        // secure: true,
-        // currently not making client store cookie
-        secure: false
+        maxAge: 86400, // 1 day
+        secure: false,
+        domain: 'localhost',
+        path: '/'
         // maxAge: maxAge * 1000
       })
       res.json({ user: responseUser._id })
@@ -89,23 +82,21 @@ const logIn = async (req, res) => {
   try {
     const response = await logInUser(email, password)
 
-    // console.log(response)
-
     if (response._id) {
+      console.log('entered')
 
       res.status(200)
       const token = createToken(response._id)
+      console.log(token);
       res.cookie('jwt', token, {
-        httpOnly: true,
-        sameSite: 'none',
-        // aaron: changing secure to false
-        // secure: true,
-        secure: false
+        sameSite: true,
+        secure: false,
+        maxAge: 86400, // 1 day
+        domain: 'localhost',
+        path: '/'
         // maxAge: maxAge * 1000
       })
-      // console.log(res.get('Set-Cookie'))
       res.json({ user: response._id })
-      // res.json({ user: res.cookie })
     } else {
       res.json({ response })
     }

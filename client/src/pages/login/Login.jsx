@@ -29,7 +29,9 @@ export default function Login() {
     const baseUrl = 'http://localhost:3000/login'
 
     try {
+      console.log('new user',newUser);
       const res = await fetch(baseUrl, {
+        mode: 'cors',
         method: "POST",
         body: JSON.stringify(newUser),
         headers: {
@@ -38,14 +40,12 @@ export default function Login() {
         credentials: 'include'
       })
 
-      // document.cookie=res.headers.get('jwt')
-      // console.log('res', res)
       console.log('-->', res)
-      // console.log(res.headers.get('set-cookie'));
       const data = await res.json()
       // console.log('getting jwt', ...res.headers)
       const sessionToken = res.headers.get('Set-Cookie');
-      console.log(sessionToken)
+      console.log('token', sessionToken)
+      console.log(document.cookie);
       // console.log(data);
       // console.log(res.headers)
 
