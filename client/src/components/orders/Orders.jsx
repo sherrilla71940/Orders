@@ -43,7 +43,7 @@ export default function Orders() {
 
   const handleChange = (idAndProcess) => {
 
-    fetch('http://127.0.0.1:3000/orders', {
+    fetch('http://localhost:3000/orders', {
       method: "PUT",
       body: JSON.stringify(idAndProcess),
       headers: {
