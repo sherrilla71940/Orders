@@ -73,7 +73,7 @@ export default function AddOrder() {
         <input type='text' id='ourClient' name='ourClient' value={state.ourClient} onChange={handleChange} required></input>
 
         <label htmlFor='date'>Date</label>
-        <input type='datetime-local' id='date' name='date' min='2023-05-01' value={state.date} onChange={handleChange} required></input>
+        <input type='datetime-local' id='date' name='date' min={new Date().toISOString().slice(0,16)} value={state.date} onChange={handleChange} required></input>
 
         <label htmlFor='quantity'>Quantity</label>
         <input type='number' id='quantity' name='quantity' min='0' max='1000000' value={state.quantity} onChange={handleChange} required></input>

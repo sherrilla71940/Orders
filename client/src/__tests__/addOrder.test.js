@@ -54,3 +54,18 @@ test('should render AddOrder component', () => {
 //   expect(tree).toMatchSnapshot();
 // console.log(tree)
 // })
+
+describe('AddOrder input validation', () => {
+  const onSubmit = jest.fn();
+
+  beforeEach(() => {
+    onSubmit.mockClear();
+    render(<AddOrder onSubmit={onSubmit}/>)
+  })
+
+  it('onSubmit is called when all fields pass validation', () => {
+    const 
+
+  })
+
+})
