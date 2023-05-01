@@ -14,16 +14,16 @@ export default function () {
   }
 
   useEffect(() => {
-    fetch('http://127.0.0.1:3000/orders', {
+    fetch('http:localhost:3000/orders', {
       method: "GET",
         headers: {
           "Content-type": "application/json"
         },
-        // credentials: 'include'
+        credentials: 'include'
     })
       .then(response => {
         if (response.ok) {
-          return response.json()
+          return response.json();
         }
         throw new Error('unable to fetch data')
       })

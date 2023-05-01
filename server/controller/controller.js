@@ -11,6 +11,7 @@ const createToken = (id) => {
 
 const getOrders = async (req, res) => {
   try {
+    console.log('reached get orders controller')
     const orders = await getAll()
     res.status(201)
     res.send(orders)
@@ -46,25 +47,25 @@ const putOrder = async (req, res) => {
 
 const signUp = async (req, res) => {
   const { email, password } = req.body;
-  // console.log(req.body)
-  console.log('reached controller')
   let responseUser;
   try {
     responseUser = await createUser(email, password)
-    console.log('responseuser', responseUser)
+    // console.log('responseuser', responseUser)
+    console.log('successful signup')
 
     if (responseUser._id) {
       const token = createToken(responseUser._id)
       res.status(201)
       res.cookie('jwt', token, {
         httpOnly: true,
-        sameSite: 'none',
+        sameSite: 'strict',
         maxAge: 86400, // 1 day
         secure: false,
         domain: 'localhost',
         path: '/'
         // maxAge: maxAge * 1000
       })
+      console.log('cookie has supposedly been set');
       res.json({ user: responseUser._id })
     } else {
       res.json({ responseUser })
@@ -90,7 +91,7 @@ const logIn = async (req, res) => {
       console.log(token);
       res.cookie('jwt', token, {
         httpOnly: true,
-        sameSite: true,
+        sameSite: 'strict',
         secure: false,
         maxAge: 86400, // 1 day
         domain: 'localhost',

@@ -1,14 +1,14 @@
 const { Router } = require('express')
 const router = new Router()
-// const { requireAuth } = require('./middleware/authMiddleware')
+const { requireAuth } = require('./middleware/authMiddleware')
 
 const { getOrders, postOrder, putOrder, signUp, logIn } = require('./controller/controller')
 
-router.get('/orders', getOrders)
+router.get('/orders', requireAuth, getOrders)
 
-router.post('/orders', postOrder)
+router.post('/orders', requireAuth, postOrder)
 
-router.put('/orders', putOrder)
+router.put('/orders', requireAuth, putOrder)
 
 router.post('/signup', signUp)
 

@@ -41,7 +41,6 @@ export default function Login() {
 
       console.log('-->', res)
       const data = await res.json()
-      console.log(document.cookie);
 
       if (data.user) {
         navigate('/orders')
