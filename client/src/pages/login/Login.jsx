@@ -25,7 +25,6 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // const baseUrl = 'http://127.0.0.1:3000/login'
     const baseUrl = 'http://localhost:3000/login'
 
     try {
@@ -42,12 +41,7 @@ export default function Login() {
 
       console.log('-->', res)
       const data = await res.json()
-      // console.log('getting jwt', ...res.headers)
-      const sessionToken = res.headers.get('Set-Cookie');
-      console.log('token', sessionToken)
       console.log(document.cookie);
-      // console.log(data);
-      // console.log(res.headers)
 
       if (data.user) {
         navigate('/orders')

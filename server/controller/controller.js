@@ -89,6 +89,7 @@ const logIn = async (req, res) => {
       const token = createToken(response._id)
       console.log(token);
       res.cookie('jwt', token, {
+        httpOnly: true,
         sameSite: true,
         secure: false,
         maxAge: 86400, // 1 day
