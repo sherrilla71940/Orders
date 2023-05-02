@@ -14,7 +14,7 @@ export default function Signup() {
     password: ''
   })
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setNewUser({
       ...newUser,
@@ -22,7 +22,7 @@ export default function Signup() {
     })
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     // console.log(newUser)
 

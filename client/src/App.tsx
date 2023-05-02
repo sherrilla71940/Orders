@@ -21,10 +21,10 @@ function App() {
       <Sidebar />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route exact path='/signup' element={<Signup />}/>
-        <Route exact path='/login' element={<Login />}/>
-        <Route exact path='/orders' element={<Orders />} />
-        <Route exact path='/addorder' element={<AddOrder />} />
+        <Route path='/signup' element={<Signup />}/>
+        <Route path='/login' element={<Login />}/>
+        <Route path='/orders' element={<Orders />} />
+        <Route path='/addorder' element={<AddOrder />} />
       </Routes>
       </div>
     </BrowserRouter>

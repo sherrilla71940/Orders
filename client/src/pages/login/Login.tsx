@@ -14,7 +14,7 @@ export default function Login() {
     password: ''
   })
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setNewUser({
       ...newUser,
@@ -22,7 +22,7 @@ export default function Login() {
     })
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     const baseUrl = 'http://127.0.0.1:3000/login'

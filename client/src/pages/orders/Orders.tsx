@@ -9,7 +9,7 @@ export default function () {
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
-  const routeChange = (path) => {
+  const routeChange = (path: string) => {
     navigate(path)
   }
 
