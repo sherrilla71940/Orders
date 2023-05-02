@@ -17,11 +17,12 @@ export default function AddOrder() {
     id: '',
     ourClient: '',
     quantity: '',
-    payment: '',
     charge: '',
     finalClient: '',
     date: '',
-    fullfilment: ''
+    payment: '',
+    fullfilment: '',
+    transit: ''
   })
 
   const handleChange = (e) => {
@@ -87,7 +88,7 @@ export default function AddOrder() {
         <div className={styles.selectors}>
 
           <div className={styles.selector}>
-            <label htmlFor='payment'>Fullfilment</label>
+            <label htmlFor='payment'>Payment</label>
             <select className={styles.select} name='payment' value={state.payment} onChange={handleChange}>
               {payment_status.map(status => (
                 <option key={status.id} value={status.status}>{status.status}</option>
@@ -105,7 +106,7 @@ export default function AddOrder() {
           </div>
 
           <div className={styles.selector}>
-            <label htmlFor='delivery'>Fullfilment</label>
+            <label htmlFor='delivery'>Transit</label>
             <select className={styles.select} name='delivery' value={state.delivery} onChange={handleChange}>
               {delivery_status.map(status => (
                 <option key={status.id} value={status.status}>{status.status}</option>

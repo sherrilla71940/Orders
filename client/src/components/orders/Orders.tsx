@@ -18,7 +18,7 @@ export default function Orders() {
   const dispatch = useDispatch()
 
   // use to change the color in the select HTML tag. Not yet implemented
-  const handleClass = (e) => {
+  const handleClass = (e: React.ChangeEvent<HTMLInputElement> ) => {
     const value = e.target.value
 
     if (stage_1.includes(value)) {
