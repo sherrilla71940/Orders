@@ -1,6 +1,7 @@
 import styles from './Orders.module.css'
 import { useSelector, useDispatch } from "react-redux";
 import { updateOrder } from "../../store/actions";
+import Order from './../Order'
 import {
   dateFormater,
   delivery_status,
@@ -39,7 +40,7 @@ export default function Orders() {
     // console.log(e.target.classList)
   }
 
-  const orders = useSelector((state) => state.orders);
+  const orders: Order[] = useSelector((state) => state.orders);
 
   const handleChange = (idAndProcess) => {
 
@@ -85,7 +86,7 @@ export default function Orders() {
           <tbody className={styles.tableBody}>
 
             {
-              orders.map(order => (
+              orders.map((order:Order) => (
                 <tr key={order.id} className={styles.tableRow}>
                   <td>{order.id}</td>
                   <td>{order.ourClient}</td>

@@ -3,8 +3,9 @@ import styles from './AddOrder.module.css'
 import { payment_status, fullfilment_status, delivery_status } from '../../utilities/utilities';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-
 import { addOrder } from "../../store/actions";
+import Order from './../Order'
+
 
 export default function AddOrder() {
 
@@ -14,12 +15,12 @@ export default function AddOrder() {
   // handling multi-line forms with one single handleChange function for each input type
   // https://www.pluralsight.com/guides/handling-multiple-inputs-with-single-onchange-handler-react
   const [state, setState] = useState({
-    id: '',
+    id: 0,
     ourClient: '',
-    quantity: '',
-    charge: '',
+    quantity: 0,
+    charge: 0,
     finalClient: '',
-    date: '',
+    date: null,
     payment: '',
     fullfilment: '',
     delivery: ''
@@ -39,8 +40,8 @@ export default function AddOrder() {
     const baseUrl = 'http://localhost:3000'
     // const baseUrl = import.meta.env.VITE_BASE_URL
 
-    const postOrder = async (order) => {
-      console.log(order)
+    const postOrder = async (order: Order) => {
+      
       const response = await fetch(baseUrl + '/orders', {
         method: "POST",
         body: JSON.stringify(order),
@@ -75,7 +76,7 @@ export default function AddOrder() {
         <input type='text' id='ourClient' name='ourClient' value={state.ourClient} onChange={handleChange} required></input>
 
         <label htmlFor='date'>Date</label>
-        <input type='datetime-local' id='date' name='date' min={new Date().toISOString().slice(0,16)} value={state.date} onChange={handleChange} required></input>
+        <input type='datetime-local' id='date' name='date' min={new Date().toISOString().slice(0,16)} value={state.date ? new Date().toISOString().slice(0,16) : ''} onChange={handleChange} required></input>
 
         <label htmlFor='quantity'>Quantity</label>
         <input type='number' id='quantity' name='quantity' min='0' max='1000000' value={state.quantity} onChange={handleChange} required></input>
