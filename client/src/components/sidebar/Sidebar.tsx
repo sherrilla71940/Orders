@@ -9,14 +9,7 @@ export default function Sidebar() {
 
   let navigate = useNavigate()
 
-  const routeChange = (path) => {
-    // query delectr all is not working
-    const menuItems = document.querySelectorAll('.menuItem')
-    // console.log(menuItems)
-    menuItems.forEach(i => {
-      if (i.innerText === size) i.classList.add('selected')
-      else i.classList.remove('selected')
-    })
+  const routeChange = (path:string) => {
     navigate(path)
   }
 

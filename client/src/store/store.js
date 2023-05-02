@@ -1,7 +1,8 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
-import Order from './../Order';
+// import Order from '../Order';
 
-const initialState: Order[] = []
+// const initialState: Order[] = []
+const initialState = [];
 
 const ADD_ORDER = 'ADD_ORDER';
 const ADD_ORDERS = 'ADD_ORDERS';
@@ -27,8 +28,8 @@ const orders = (state = initialState, action) => {
 //         }
 //       });
 
-//     default:
-//       return state
+    default:
+      return state
   }
 }
 
