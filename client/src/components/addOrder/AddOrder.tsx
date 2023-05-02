@@ -34,7 +34,7 @@ export default function AddOrder() {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const baseUrl = 'http://localhost:3000'
