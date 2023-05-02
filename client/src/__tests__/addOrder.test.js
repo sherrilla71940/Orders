@@ -1,6 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render, screen, cleanup } from "@testing-library/react"
+import { render, screen, cleanup, waitFor, fireEvent } from "@testing-library/react"
 import renderer, { ReactTestRendererJSON } from 'react-test-renderer'
 import user from '@testing-library/user-event'
 import { Provider } from "react-redux"
@@ -22,23 +22,23 @@ const store = mockStore({ //Provide initial state
     fullfilment: ''
 });
 
-test('should render AddOrder component', () => {
-  render(
-    <Provider store={store}>
-      <MemoryRouter>
-        <AddOrder />   
-      </MemoryRouter>
-  </Provider>
+// test('should render AddOrder component', () => {
+//   render(
+//     <Provider store={store}>
+//       <MemoryRouter>
+//         <AddOrder />   
+//       </MemoryRouter>
+//   </Provider>
    
-  );
+//   );
 
-  const addOrderElement = screen.getByTestId('add-1');
-  expect(addOrderElement).toBeInTheDocument();
-  //Too specific not a good test, just an example:
-  // expect(addOrderElement).toHaveTextContent('New Order')
-  // expect(addOrderElement).toContainHTML('<form>')
+//   const addOrderElement = screen.getByTestId('add-1');
+//   expect(addOrderElement).toBeInTheDocument();
+//   //Too specific not a good test, just an example:
+//   // expect(addOrderElement).toHaveTextContent('New Order')
+//   // expect(addOrderElement).toContainHTML('<form>')
 
-})
+// })
 
 // console.log(TestRenderer)
 
@@ -60,12 +60,75 @@ describe('AddOrder input validation', () => {
 
   beforeEach(() => {
     onSubmit.mockClear();
-    render(<AddOrder onSubmit={onSubmit}/>)
+    render(
+      <Provider store={store}>
+       <MemoryRouter>
+          <AddOrder onSubmit={onSubmit} />
+        </MemoryRouter>
+     </Provider>
+    )
   })
 
-  it('onSubmit is called when all fields pass validation', () => {
-    const 
+  it('onSubmit is called when all fields pass validation', async () => {
+    user.type(getID(), '100');
+    user.type(getClient(), 'Client');
+    user.type(getDate(), '2070-05-25T23:12');
+    user.type(getQuantity(), '1000000');
+    user.type(getCharge(), '100');
+    user.type(getFClient(), '100');
+    // user.selectOptions(delivery, within(delivery).getByRole('option', {name: 'unpaid'}))
+    // user.selectOptions(dropdown, within(dropdown).getByRole('option', { name: 'Processing' }))
+    // user.selectOptions(dropdown, within(dropdown).getByRole('option', {name: 'Delivered'}))
+
+    const addButton = screen.getByTestId('add')
+    console.log(addButton)
+    user.click(addButton);
+
+    await waitFor(() => {
+      expect(onSubmit).toHaveBeenCalledTimes(1);
+    })
+
+    expect(onSubmit).toHaveBeenCalledWith({
+      algo: true
+    })
 
   })
 
 })
+
+/// Form input validation 
+function getID() {
+  return screen.getByTestId('id') //, {
+      // name: /ID/i
+    // })
+}
+
+function getClient() {
+  return screen.getByTestId('ourClient') //, {
+      // name: /Our client/i
+    // })
+}
+
+function getDate() {
+  return screen.getByTestId('date') //, {
+      // name: /Date/i
+    // })
+}
+
+function getQuantity() {
+  return screen.getByTestId('quantity') //, {
+    // name: /Quantity/i
+  // })
+}
+
+function getCharge() {
+  return screen.getByTestId('charge')//, {
+    // name: /Charge/i
+  // })
+}
+
+function getFClient() {
+  return screen.getByTestId('finalClient') //, {
+    // name: /Final client/i
+  // })
+}

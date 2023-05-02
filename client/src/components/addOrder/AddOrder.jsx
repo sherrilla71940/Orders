@@ -46,9 +46,11 @@ export default function AddOrder() {
           "Content-type": "application/json"
         }
       })
-      return await response.json()
+      await response.json()
+      postOrder(state)
+      return 
     }
-    postOrder(state)
+    // await postOrder(state)
     dispatch(addOrder(state))
     navigate('/orders')
   }
@@ -67,22 +69,22 @@ export default function AddOrder() {
         <h1>New Order</h1>
 
         <label htmlFor='id'>ID</label>
-        <input type='number' id='id' name='id' min='0' max='1000000' value={state.id} onChange={handleChange} required></input>
+        <input type='number' data-testid='id' name='id' min='0' max='1000000' value={state.id} onChange={handleChange} required></input>
 
         <label htmlFor='ourClient'>Our client</label>
-        <input type='text' id='ourClient' name='ourClient' value={state.ourClient} onChange={handleChange} required></input>
+        <input type='text' data-testid='ourClient' name='ourClient' value={state.ourClient} onChange={handleChange} required></input>
 
         <label htmlFor='date'>Date</label>
-        <input type='datetime-local' id='date' name='date' min={new Date().toISOString().slice(0,16)} value={state.date} onChange={handleChange} required></input>
+        <input type='datetime-local' data-testid='date' name='date' min={new Date().toISOString().slice(0,16)} value={state.date} onChange={handleChange} required></input>
 
         <label htmlFor='quantity'>Quantity</label>
-        <input type='number' id='quantity' name='quantity' min='0' max='1000000' value={state.quantity} onChange={handleChange} required></input>
+        <input type='number' data-testid='quantity' name='quantity' min='0' max='1000000' value={state.quantity} onChange={handleChange} required></input>
 
         <label htmlFor='charge'>Charge</label>
-        <input type='number' id='charge' name='charge' min='0' max='10000000' value={state.charge} onChange={handleChange} required></input>
+        <input type='number' data-testid='charge' name='charge' min='0' max='10000000' value={state.charge} onChange={handleChange} required></input>
 
         <label htmlFor='finalClient'>Final client</label>
-        <input type='text' id='finalClient' name='finalClient' value={state.finalClient} onChange={handleChange} required></input>
+        <input type='text' data-testid='finalClient' name='finalClient' value={state.finalClient} onChange={handleChange} required></input>
 
         <div className={styles.selectors}>
 
@@ -127,6 +129,7 @@ export default function AddOrder() {
 
           <button
             type='submit'
+            data-testid='add'
             className={styles.addButton}
           >
             Add Order

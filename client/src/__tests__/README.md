@@ -6,3 +6,8 @@ In order to make the test run:
 4. npm install redux-mock-store --save-dev 
 5. npm install react-scripts --save-dev
 4. npm run test
+
+Use testing playground to see which query would select the html you 
+are looking for:
+
+https://testing-playground.com/
