@@ -33,8 +33,4 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.listen(port, () => {
-  console.log(path);
-  console.log(process.env.DASHBOARD_CLIENT);
-  console.log(`🚀 Server running on http://localhost:${port}/  ✅`);
-});
+module.exports = { app, port };
