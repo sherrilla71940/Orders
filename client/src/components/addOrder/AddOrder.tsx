@@ -6,6 +6,16 @@ import { useDispatch } from "react-redux";
 import { addOrder } from "../../store/actions";
 import Order from './../Order'
 
+//Note:In React with TypeScript, when handling input changes, you can use the React.ChangeEvent<T> event type, 
+// where T represents the type of the input element. The specific type for each input element can vary depending 
+// on the type of data being handled. For example: 
+// <input type="text" />: React.ChangeEvent<HTMLInputElement>
+// <input type="checkbox" />: React.ChangeEvent<HTMLInputElement>
+// <textarea></textarea>: React.ChangeEvent<HTMLTextAreaElement>
+// <select></select>: React.ChangeEvent<HTMLSelectElement>
+
+// So in order to handle all types at once in the handleChange function we create a union type:
+type InputChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
 
 export default function AddOrder() {
 
@@ -26,7 +36,8 @@ export default function AddOrder() {
     delivery: ''
   })
 
-  const handleChange = (e) => {
+  //Note special type declared in this component for different kind of input types
+  const handleChange = (e: InputChangeEvent) => {
     const value = e.target.value;
     setState({
       ...state,
