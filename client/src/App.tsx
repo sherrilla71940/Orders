@@ -20,7 +20,7 @@ function App() {
       <div className="App">
       <Sidebar />
       <Routes>
-        <Route exact path='/' element={<Home />} />
+        <Route path='/' element={<Home />} />
         <Route exact path='/signup' element={<Signup />}/>
         <Route exact path='/login' element={<Login />}/>
         <Route exact path='/orders' element={<Orders />} />
