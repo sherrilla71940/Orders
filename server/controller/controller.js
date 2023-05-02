@@ -19,7 +19,9 @@ const getOrders = async (req, res) => {
     console.log("reached get orders controller");
     const orders = await getAll();
     res.status(201);
-    res.send(orders);
+    console.log("reached get orders");
+    // res.send(orders);
+    res.json(orders);
   } catch (error) {
     console.log(error);
     res.status(400);
@@ -82,17 +84,18 @@ const signUp = async (req, res) => {
 };
 
 const logIn = async (req, res) => {
+  console.log("reached login controller");
   const { email, password } = req.body;
-  console.log("login reached", req.body);
+  // console.log("login reached", req.body);
   try {
     const response = await logInUser(email, password);
 
     if (response._id) {
-      console.log("entered");
+      console.log("found id");
 
       res.status(200);
       const token = createToken(response._id);
-      console.log(token);
+      console.log("created token");
       res.cookie("jwt", token, {
         httpOnly: true,
         sameSite: "strict",
