@@ -2,6 +2,7 @@ import styles from './Orders.module.css'
 import { useSelector, useDispatch } from "react-redux";
 import { updateOrder } from "../../store/actions";
 import Order from '../../Order'
+
 import {
   dateFormater,
   delivery_status,
@@ -20,28 +21,29 @@ export default function Orders() {
 
 
   // use to change the color in the select HTML tag. Not yet implemented
-  const handleClass = (e: React.ChangeEvent<HTMLInputElement> ) => {
-    const value = e.target.value
+  // const handleClass = (e: React.ChangeEvent<HTMLInputElement> ) => {
+  //   const value = e.target.value
 
-    if (stage_1.includes(value)) {
-      e.target.classList.add(`${styles.bg_stage_1}`)
-      e.target.classList.remove(`${styles.bg_stage_2}`)
-      e.target.classList.remove(`${styles.bg_stage_3}`)
-    }
-    if (stage_2.includes(value)) {
-      e.target.classList.add(`${styles.bg_stage_2}`)
-      e.target.classList.remove(`${styles.bg_stage_1}`)
-      e.target.classList.remove(`${styles.bg_stage_3}`)
-    }
-    if (stage_3.includes(value)) {
-      e.target.classList.add(`${styles.bg_stage_3}`)
-      e.target.classList.remove(`${styles.bg_stage_1}`)
-      e.target.classList.remove(`${styles.bg_stage_2}`)
-    }
-    // console.log(e.target.classList)
-  }
+  //   if (stage_1.includes(value)) {
+  //     e.target.classList.add(`${styles.bg_stage_1}`)
+  //     e.target.classList.remove(`${styles.bg_stage_2}`)
+  //     e.target.classList.remove(`${styles.bg_stage_3}`)
+  //   }
+  //   if (stage_2.includes(value)) {
+  //     e.target.classList.add(`${styles.bg_stage_2}`)
+  //     e.target.classList.remove(`${styles.bg_stage_1}`)
+  //     e.target.classList.remove(`${styles.bg_stage_3}`)
+  //   }
+  //   if (stage_3.includes(value)) {
+  //     e.target.classList.add(`${styles.bg_stage_3}`)
+  //     e.target.classList.remove(`${styles.bg_stage_1}`)
+  //     e.target.classList.remove(`${styles.bg_stage_2}`)
+  //   }
+  //   // console.log(e.target.classList)
+  // }
 
-  const orders: Order[] = useSelector((state) => state.orders);
+  // const orders: Order[] = useSelector((state) => state.orders);
+  const orders = useSelector((state) => state.orders);
  
   const handleChange = (idAndProcess) => {
 
@@ -87,7 +89,8 @@ export default function Orders() {
           <tbody className={styles.tableBody}>
 
             {
-              orders.map((order:Order) => (
+              // orders.map((order:Order) => (
+              orders.map((order) => (
                 <tr key={order.id} className={styles.tableRow}>
                   <td>{order.id}</td>
                   <td>{order.ourClient}</td>

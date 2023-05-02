@@ -1,4 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
+
 // import Order from '../Order';
 
 // const initialState: Order[] = []
@@ -16,22 +17,23 @@ const orders = (state = initialState, action) => {
     case ADD_ORDERS:
       return [...action.payload];
 
-//     case UPDATE_STATUS:
-//       const [keys, values] = Object.entries(action.payload);
-//       console.log(action.payload)
-//       return state.map(o => {
-//         if (o.id === action.payload.id) {
-//           o[values[0]] = values[1]
-//           return o;
-//         } else {
-//           return o;
-//         }
-//       });
+    case UPDATE_STATUS:
+      const [keys, values] = Object.entries(action.payload);
+      console.log(action.payload)
+      return state.map(o => {
+        if (o.id === action.payload.id) {
+          o[values[0]] = values[1]
+          return o;
+        } else {
+          return o;
+        }
+      });
 
     default:
       return state
   }
 }
+
 
 const reducers = combineReducers({
   orders
