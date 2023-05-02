@@ -1,39 +1,40 @@
-import styles from './Orders.module.css'
-import Orders from '../../components/orders/Orders'
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import styles from "./Orders.module.css";
+import Orders from "../../components/orders/Orders";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { addOrders } from "../../store/actions";
 import { useDispatch } from "react-redux";
 
 export default function () {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const routeChange = (path) => {
-    navigate(path)
-  }
+    navigate(path);
+  };
 
   useEffect(() => {
-    fetch('http:localhost:3000/orders', {
+    fetch("http://localhost:3000/orders", {
       method: "GET",
-        headers: {
-          "Content-type": "application/json"
-        },
-        credentials: 'include'
+      headers: {
+        "Content-type": "application/json",
+      },
+      credentials: "include",
     })
-      .then(response => {
+      .then((response) => {
         if (response.ok) {
+          console.log(response);
           return response.json();
         }
-        throw new Error('unable to fetch data')
+        throw new Error("unable to fetch data");
       })
-      .then(data => {
-        dispatch(addOrders(data))
+      .then((data) => {
+        dispatch(addOrders(data));
       })
-      .catch(error => {
-        console.log('Catched error: ', error)
-      })
-  }, [])
+      .catch((error) => {
+        console.log("Catched error: ", error);
+      });
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -44,11 +45,13 @@ export default function () {
         </div>
         <button
           className={styles.button}
-          onClick={() => routeChange('/addorder')}
-        >Create Order</button>
+          onClick={() => routeChange("/addorder")}
+        >
+          Create Order
+        </button>
       </div>
 
       <Orders />
     </div>
-  )
+  );
 }

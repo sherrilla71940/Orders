@@ -17,9 +17,10 @@ const createToken = (id) => {
 const getOrders = async (req, res) => {
   try {
     console.log("reached get orders controller");
+    console.log(req.cookies);
     const orders = await getAll();
     res.status(201);
-    console.log("reached get orders");
+    // console.log("reached get orders");
     // res.send(orders);
     res.json(orders);
   } catch (error) {

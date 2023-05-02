@@ -30,7 +30,7 @@ app.use(express.json());
 app.use(router);
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.json("Hello World!");
 });
 
 module.exports = { app, port };
