@@ -1,7 +1,7 @@
 import styles from './Orders.module.css'
 import { useSelector, useDispatch } from "react-redux";
 import { updateOrder } from "../../store/actions";
-import Order from './../Order'
+import Order from '../../Order'
 import {
   dateFormater,
   delivery_status,
@@ -17,6 +17,7 @@ import {
 export default function Orders() {
 
   const dispatch = useDispatch()
+
 
   // use to change the color in the select HTML tag. Not yet implemented
   const handleClass = (e: React.ChangeEvent<HTMLInputElement> ) => {
@@ -41,7 +42,7 @@ export default function Orders() {
   }
 
   const orders: Order[] = useSelector((state) => state.orders);
-
+ 
   const handleChange = (idAndProcess) => {
 
     fetch('http://localhost:3000/orders', {

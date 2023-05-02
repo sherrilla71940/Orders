@@ -4,7 +4,7 @@ import { payment_status, fullfilment_status, delivery_status } from '../../utili
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { addOrder } from "../../store/actions";
-import Order from './../Order'
+import Order from '../../Order'
 
 //Note:In React with TypeScript, when handling input changes, you can use the React.ChangeEvent<T> event type, 
 // where T represents the type of the input element. The specific type for each input element can vary depending 
@@ -81,7 +81,7 @@ export default function AddOrder() {
         <h1>New Order</h1>
 
         <label htmlFor='id'>ID</label>
-        <input type='number' id='id' name='id' min='0' max='1000000' value={state.id} onChange={handleChange} required></input>
+        <input type='number' id='id' name='id' min='1' max='1000000' value={state.id} onChange={handleChange} required></input>
 
         <label htmlFor='ourClient'>Our client</label>
         <input type='text' id='ourClient' name='ourClient' value={state.ourClient} onChange={handleChange} required></input>
@@ -90,7 +90,7 @@ export default function AddOrder() {
         <input type='datetime-local' id='date' name='date' min={new Date().toISOString().slice(0,16)} value={state.date ? new Date().toISOString().slice(0,16) : ''} onChange={handleChange} required></input>
 
         <label htmlFor='quantity'>Quantity</label>
-        <input type='number' id='quantity' name='quantity' min='0' max='1000000' value={state.quantity} onChange={handleChange} required></input>
+        <input type='number' id='quantity' name='quantity' min='1' max='1000000' value={state.quantity} onChange={handleChange} required></input>
 
         <label htmlFor='charge'>Charge</label>
         <input type='number' id='charge' name='charge' min='0' max='10000000' value={state.charge} onChange={handleChange} required></input>
