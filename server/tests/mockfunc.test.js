@@ -51,9 +51,9 @@ describe("should save user to db", () => {
         password: "123123",
       });
       const found = await users.findOne({ email: email });
-      console.log("found", found);
-      console.dir(found);
-      expect(found).toBeDefined();
+      // console.log("found", found);
+      // console.dir(found);
+      expect(found).toBeTruthy();
     } catch (e) {
       console.log(e);
     }
