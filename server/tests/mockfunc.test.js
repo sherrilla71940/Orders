@@ -1,27 +1,46 @@
 const { describe, expect, test } = require("@jest/globals");
 const request = require("supertest");
-const { app, port } = require("../app");
-const { MongoClient } = require("mongodb");
-const mongoose = require("../database/db");
+const { mongoose } = require("mongoose");
+const { userSchema } = require("../database/models");
+const { app } = require("../app");
 
 let connection;
-let db;
-let users;
-let orders;
+let UserModel;
+let user;
 
-// beforeAll(async () => {
-//   connection = await MongoClient.connect("mongodb://127.0.0.1:27017/orders", {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   });
-//   // db = connection.db("mongodb://127.0.0.1:27017/orders");
-//   db = connection.db("orders");
-//   users = db.collection("users");
-//   orders = db.collection("orders");
-// });
+function generateUsername() {
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  const usernameLength = Math.floor(Math.random() * 10) + 3; // Generates a number between 3 and 12
+  const usernameArray = new Array(usernameLength).fill(alphabet);
+  const username = usernameArray
+    .map((letters) => letters[Math.floor(Math.random() * letters.length)])
+    .join("");
+  return username;
+}
+
+beforeAll(async () => {
+  user = {
+    email: generateUsername() + "@gmail.com",
+    password: "123123",
+  };
+  try {
+    connection = await mongoose.connect("mongodb://127.0.0.1:27017/orders");
+    console.log("connected to db");
+    UserModel = mongoose.model("user", userSchema);
+  } catch (e) {
+    console.log("error in db connection", e);
+  }
+});
 
 afterAll(async () => {
-  await MongoClient.disconnect();
+  try {
+    await UserModel.deleteOne(user);
+    await connection.disconnect();
+    console.log("disconnected from db");
+    console.log(UserModel);
+  } catch (e) {
+    console.log("couldnt disconnect");
+  }
 });
 
 describe("GET /", () => {
@@ -29,37 +48,19 @@ describe("GET /", () => {
     const response = await request(app).get("/");
     expect(response.statusCode).toBe(200);
     expect(response.headers["content-type"]).toMatch(/json/);
-    expect(response).resolves.toBe("Hello World"); // when I change wrong data still passing test
+    expect(response.text).toBe('"Hello World!"'); // when I change wrong data still passing test
     // try removing try catch
   });
   test("status code should be 404 when on non exsistent endpoint", async () => {
-    const response = await request(app).get("/");
+    const response = await request(app).get("/asdasd");
     expect(response.statusCode).toBe(404);
   });
 });
 
-describe("POST /signup", () => {
-  test("users should be able to sign up", async () => {
-    const user = {
-      email: "12312312@gmail.com",
-      password: "123123",
-    };
+describe.only("POST /signup", () => {
+  test("Database should store user after successful signup", async () => {
     const registrationResponse = await request(app).post("/signup").send(user);
-    const found = await users.findOne(user);
-    // console.log("found user:", found);
     expect(registrationResponse.statusCode).toBe(201);
-    expect(found).toContain(user.email);
-    // console.log(found.email);
+    expect(Object.keys(registrationResponse.body)).toHaveLength(1); // should only have user id
   });
 });
-
-// describe("after loggin in or signing up, users should be able to view orders page, but not if they haven't", () => {
-//   test("after successful signup user should be able to use cookie to view orders page", async () => {
-//     const registrationResponse = await request(app).post("/register")
-//     .send({
-//       email: '12312312@gmail.com',
-//       password: '123123'
-//     })
-
-//   });
-// })

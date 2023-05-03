@@ -54,14 +54,17 @@ const putOrder = async (req, res) => {
 };
 
 const signUp = async (req, res) => {
+  console.log("signup");
   const { email, password } = req.body;
   let responseUser;
   try {
     responseUser = await createUser(email, password);
     // console.log('responseuser', responseUser)
     console.log("successful signup");
-
+    console.log("log responseUser", responseUser);
+    console.log(email, password);
     if (responseUser._id) {
+      console.log("entered if, user is saved");
       const token = createToken(responseUser._id);
       res.status(201);
       res.cookie("jwt", token, {
@@ -76,7 +79,8 @@ const signUp = async (req, res) => {
       console.log("cookie has supposedly been set");
       res.json({ user: responseUser._id });
     } else {
-      res.json({ responseUser });
+      res.status(300);
+      res.json({ responseUser, debug: true });
     }
   } catch (error) {
     res.status(400);
