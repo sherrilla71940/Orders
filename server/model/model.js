@@ -79,12 +79,13 @@ const postOne = async (order) => {
 
 const updateOne = async (idAndProcess) => {
   try {
-      const filter = {id: idAndProcess.id}
+    const filter = {id: idAndProcess.id}
     const process = Object.keys(idAndProcess)[1];
     const update = { [process]: idAndProcess[process] }
     console.log(filter, update)
-    const updatedOrder = await Orders.findOneAndUpdate(filter, update)
-    return
+    await Orders.findOneAndUpdate(filter, update)
+    const updatedOrder = await findOne(filter)
+    return updatedOrder
   } catch (err) {
     console.log(err)
 }

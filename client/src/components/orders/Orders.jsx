@@ -55,12 +55,25 @@ export default function Orders() {
           "Content-type": "application/json"
         }
       })
-    
-       if (response.ok) {
-          return await response.json()
-        } else {
+        .then(response => {
+        if (response.ok) {
+          return response.json()
+        }
         throw new Error('unable to fetch data')
-      }
+      })
+      
+      .then(data => {
+        dispatch(updateOrder(data))
+        console.log(data)
+      })
+      .catch(error => {
+        console.log('Catched error: ', error)
+      })
+      //  if (response.ok) {
+      //     return await response.json()
+      //   } else {
+      //   throw new Error('unable to fetch data')
+      // }
     }
 
   const handleChange = async (idAndProcess) => {
