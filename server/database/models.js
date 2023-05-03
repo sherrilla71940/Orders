@@ -33,7 +33,12 @@ userSchema.statics.login = async function (email, password) {
 }
 
 const orderSchema = new mongoose.Schema({
-  id: Number,
+  id: {
+    type: Number,
+    required: true,
+    unique: true
+  },
+
   ourClient: String,
   date: Date,
   quantity: Number,
@@ -42,6 +47,7 @@ const orderSchema = new mongoose.Schema({
   payment: String,
   fullfilment: String,
   delivery: String
+  
 });
 
 module.exports = {

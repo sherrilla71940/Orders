@@ -82,10 +82,8 @@ const updateOne = async (idAndProcess) => {
     const filter = {id: idAndProcess.id}
     const process = Object.keys(idAndProcess)[1];
     const update = { [process]: idAndProcess[process] }
-    // console.log(filter, update)
+    //.findOneAndUpdate query returns the updated object if an option {new:true} is passed to it
     const updatedOrder = await Orders.findOneAndUpdate(filter, update, {new: true})
-    // const updatedOrder = await Orders.findOne(filter)
-    console.log(updatedOrder)
     return updatedOrder
   } catch (err) {
     console.log(err)
