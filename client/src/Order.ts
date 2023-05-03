@@ -1,10 +1,10 @@
 type Order = {
     id: number,
     ourClient: string,
+    date: Date | null,
     quantity: number,
     charge: number,
     finalClient: string,
-    date: Date | null,
     payment: string,
     fullfilment: string,
     delivery: string

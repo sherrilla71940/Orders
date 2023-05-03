@@ -18,16 +18,18 @@ const orders = (state = initialState, action) => {
       return [...action.payload];
 
     case UPDATE_STATUS:
-      const [keys, values] = Object.entries(action.payload);
-      console.log(action.payload)
-      return state.map(o => {
-        if (o.id === action.payload.id) {
-          o[values[0]] = values[1]
-          return o;
-        } else {
-          return o;
-        }
-      });
+      return [...state, action.payload];
+      // const [keys, values] = Object.entries(action.payload);
+      // console.log(Object.entries(action.payload))
+      // return state.map(o => {
+      //   if (o.id === action.payload.id) {
+      //     // o[values[0]] = values[1]
+      //     console.log(o.id, action.payload.id)
+      //     // return o;
+      //   } else {
+      //     // return o;
+      //   }
+      // });
 
     default:
       return state

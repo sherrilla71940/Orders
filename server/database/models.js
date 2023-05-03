@@ -38,9 +38,9 @@ const orderSchema = new mongoose.Schema({
   date: Date,
   quantity: Number,
   charge: Number,
+  finalClient: String,
   payment: String,
   fullfilment: String,
-  finalClient: String,
   delivery: String
 });
 

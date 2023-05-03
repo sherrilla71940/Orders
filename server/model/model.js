@@ -64,9 +64,9 @@ const postOne = async (order) => {
       date: order.date,
       quantity: order.quantity,
       charge: order.charge,
+      finalClient: order.finalClient,
       payment: order.payment,
       fullfilment: order.fullfilment,
-      finalClient: order.finalClient,
       delivery: order.delivery
     })
     return newOrder
@@ -77,23 +77,27 @@ const postOne = async (order) => {
   }
 }
 
-const updateOne = async (idAndField) => {
-  // await Orders.updateOne({id: idAndField.id}, {payment: idAndField.payment})
-  // const doc = Orders.findOne({id: 1})
-
-  const [keys, values] = Object.entries(idAndField);
-  // console.log('in the model: ', keys, values)
+const updateOne = async (idAndProcess) => {
+  try {
+      const filter = {id: idAndProcess.id}
+    const process = Object.keys(idAndProcess)[1];
+    const update = { [process]: idAndProcess[process] }
+    console.log(filter, update)
+    const updatedOrder = await Orders.findOneAndUpdate(filter, update)
+    return
+  } catch (err) {
+    console.log(err)
+}
 
   // finding the document and saving it is the best supported method for updating docs.
   // https://masteringjs.io/tutorials/mongoose/update
   // const doc = await Orders.findOne({id: idAndField.id})
   // doc[values[0]] = values[1];
   // return await doc.save();
-
-  const doc = await Orders.findOne({id: idAndField.id})
-  doc[values[0]] = values[1];
-  await doc.save();
-  return {id: doc.id, [values[0]]: values[1]}
+  // const doc = await Orders.findOne({id: idAndField.id})
+  // doc[values[0]] = values[1];
+  // await doc.save();
+  // return {id: doc.id, [values[0]]: values[1]}
 }
 
 

@@ -1,7 +1,7 @@
 import styles from './Orders.module.css'
 import { useSelector, useDispatch } from "react-redux";
 import { updateOrder } from "../../store/actions";
-import Order from '../../Order'
+// import Order from '../../Order'
 
 import {
   dateFormater,
@@ -45,29 +45,51 @@ export default function Orders() {
   // const orders: Order[] = useSelector((state) => state.orders);
   const orders = useSelector((state) => state.orders);
  
-  const handleChange = (idAndProcess) => {
-
-    fetch('http://localhost:3000/orders', {
-      method: "PUT",
-      body: JSON.stringify(idAndProcess),
-      headers: {
-        "Content-type": "application/json"
-      }
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json()
+  const baseUrl = 'http://localhost:3000'
+  const putOrder = async (idAndProcess) => {
+      
+      const response = await fetch(baseUrl + '/orders', {
+        method: "PUT",
+        body: JSON.stringify(idAndProcess),
+        headers: {
+          "Content-type": "application/json"
         }
+      })
+    
+       if (response.ok) {
+          return await response.json()
+        } else {
         throw new Error('unable to fetch data')
-      })
-      .then(data => {
-        dispatch(updateOrder(data))
-        // console.log(data)
-      })
-      .catch(error => {
-        console.log('Catched error: ', error)
-      })
+      }
+    }
+
+  const handleChange = async (idAndProcess) => {
+    // console.log(idAndProcess )
+    await putOrder(idAndProcess)
   }
+ 
+    // fetch('http://localhost:3000/orders', {
+    //   method: "PUT",
+    //   body: JSON.stringify(idAndProcess),
+    //   headers: {
+    //     "Content-type": "application/json"
+    //   }
+    // })
+    //   .then(response => {
+    //     if (response.ok) {
+    //       return response.json()
+    //     }
+    //     throw new Error('unable to fetch data')
+    //   })
+      // 
+    //   .then(data => {
+    //     dispatch(updateOrder(data))
+    //     // console.log(data)
+    //   })
+    //   .catch(error => {
+    //     console.log('Catched error: ', error)
+    //   })
+  // }
 
   return (
     <>
