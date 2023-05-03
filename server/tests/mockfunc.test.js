@@ -9,18 +9,23 @@ let UserModel;
 let user;
 
 function generateUsername() {
-  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  const alphabet = "abcdefghijklmnopqrstuvwxyz1234567890_";
   const usernameLength = Math.floor(Math.random() * 10) + 3; // Generates a number between 3 and 12
   const usernameArray = new Array(usernameLength).fill(alphabet);
   const username = usernameArray
     .map((letters) => letters[Math.floor(Math.random() * letters.length)])
     .join("");
-  return username;
+
+  let emails = ["@gmail.com", "@hotmail.com", "@yahoo.com", "@outlook.com"];
+  let randomIndex = Math.floor(Math.random() * emails.length);
+  let randomEmail = emails[randomIndex];
+
+  return username + randomEmail;
 }
 
 beforeAll(async () => {
   user = {
-    email: generateUsername() + "@gmail.com",
+    email: generateUsername(),
     password: "123123",
   };
   try {
