@@ -1,9 +1,9 @@
+import styles from './Signup.module.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '../../components/pageHeader/PageHeader';
-import styles from './Login.module.css'
 
-export default function Login() {
+export default function Signup() {
 
   const navigate = useNavigate()
   const [emailErrorMessage, setEmailMessageError] = useState('')
@@ -14,7 +14,7 @@ export default function Login() {
     password: ''
   })
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setNewUser({
       ...newUser,
@@ -22,13 +22,14 @@ export default function Login() {
     })
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    // console.log(newUser)
 
-    const baseUrl = 'http://127.0.0.1:3000/login'
+    const baseUrl = 'http://127.0.0.1:3000/signup'
 
     try {
-      const res = await fetch(baseUrl, {
+      await fetch(baseUrl, {
         method: "POST",
         body: JSON.stringify(newUser),
         headers: {
@@ -36,24 +37,29 @@ export default function Login() {
         },
         credentials: 'include'
       })
-      console.log('-->', res)
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+        }
+        throw new Error('fail to create new user')
+      })
+      .then(data => {
+        console.log('logando data: ', data, data.user)
 
-      const data = await res.json()
-
-      if (data.user) {
-        navigate('/orders')
-        console.log(data.user)
-      }
-      if (data.response && (data.response.email ||  data.response.password)) {
-          setEmailMessageError(data.response.email)
-          setPasswordMessageError(data.response.password)
+        if (data.responseUser && (data.responseUser.email ||  data.responseUser.password)) {
+          setEmailMessageError(data.responseUser.email)
+          setPasswordMessageError(data.responseUser.password)
         } else {
           setEmailMessageError('ok')
           setPasswordMessageError('ok')
           setTimeout(() => {
-            if (data.user) navigate('/orders')
+            if (data.user) navigate('/login')
           }, 1000)
         }
+
+        // if (data.user) navigate('/orders')
+        // if (data.user) location.assign('/orders')
+      })
     } catch (error) {
       console.log(error)
     }
@@ -61,9 +67,9 @@ export default function Login() {
 
   return (
     <div className={styles.container}>
-      <PageHeader p={'Welcome'} h1={'Log in'}/>
+      <PageHeader p={'Welcome'} h1={'Sign up'}/>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h1>Log in</h1>
+        <h1>Sign up</h1>
 
         <label htmlFor='email'>Email</label>
         <input
@@ -76,7 +82,6 @@ export default function Login() {
         />
         <div className={styles.errorMessage}>{emailErrorMessage}</div>
 
-
         <label htmlFor='password'>Password</label>
         <input
           type='password'
@@ -86,10 +91,9 @@ export default function Login() {
           onChange={handleChange}
           required
         />
-
         <div className={styles.errorMessage}>{passwordErrorMessage}</div>
 
-        <button className={styles.button} >Log in</button>
+        <button className={styles.button} >Sign up</button>
       </form>
     </div>
   )
