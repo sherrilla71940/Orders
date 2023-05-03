@@ -1,12 +1,14 @@
 const { describe, expect, test } = require("@jest/globals");
 const request = require("supertest");
 const { mongoose } = require("mongoose");
-const { userSchema } = require("../database/models");
+const { userSchema, orderSchema } = require("../database/models");
 const { app } = require("../app");
 
 let connection;
 let UserModel;
+let OrderModel;
 let user;
+let cookie;
 
 function generateUsername() {
   const alphabet = "abcdefghijklmnopqrstuvwxyz1234567890_";
@@ -32,6 +34,7 @@ beforeAll(async () => {
     connection = await mongoose.connect("mongodb://127.0.0.1:27017/orders");
     console.log("connected to db");
     UserModel = mongoose.model("user", userSchema);
+    OrderModel = mongoose.model("Orders", orderSchema);
   } catch (e) {
     console.log("error in db connection", e);
   }
@@ -62,10 +65,26 @@ describe("GET /", () => {
   });
 });
 
-describe.only("POST /signup", () => {
+describe("POST /signup", () => {
   test("Database should store user after successful signup", async () => {
     const registrationResponse = await request(app).post("/signup").send(user);
+    // console.log(
+    //   "looking at cookie:",
+    //   registrationResponse.headers["set-cookie"]
+    // );
+    cookie = registrationResponse.headers["set-cookie"];
     expect(registrationResponse.statusCode).toBe(201);
     expect(Object.keys(registrationResponse.body)).toHaveLength(1); // should only have user id
+  });
+});
+
+describe("GET /orders", () => {
+  test("if user has cookie, should be able to view orders page", async () => {
+    const ordersResponse = await request(app)
+      .get("/orders")
+      .set("Cookie", [cookie]);
+    console.log("orders response body:", ordersResponse.body);
+    expect(ordersResponse.statusCode).toBe(201);
+    expect(ordersResponse.body.length).toBeGreaterThan(0);
   });
 });
