@@ -5,13 +5,13 @@ const requireAuth = (req, res, next) => {
   const token = req.cookies.jwt
 
   if (token) {
-    jwt.verify(token, 'secret', (error, decodedToken) => {
+    jwt.verify(token, 'secret', { algorithms: ["HS256"] }, (error, decodedToken) => {
       if (error) {
         console.log(error)
         res.redirect('/login')
       } else {
         console.log(decodedToken)
-        next()
+        return next()
       }
     })
   } else {
