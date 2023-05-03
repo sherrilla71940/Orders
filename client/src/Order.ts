@@ -1,5 +1,5 @@
 type Order = {
-    id: number,
+    id: string,
     ourClient: string,
     date: Date | null,
     quantity: number,

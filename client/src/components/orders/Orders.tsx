@@ -2,7 +2,6 @@ import styles from './Orders.module.css'
 import { useSelector, useDispatch } from "react-redux";
 import { updateOrder } from "../../store/actions";
 import Order from '../../Order'
-import { uuid } from "uuidv4"
 
 import {
   dateFormater,
@@ -17,7 +16,7 @@ import {
 import { Value } from '@radix-ui/react-select';
 
 type idAndProcess = {
-  id: number,
+  id: string,
   payment?: string,
   fullfilment?: string,
   delivery?: string

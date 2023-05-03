@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { addOrder } from "../../store/actions";
 import Order from '../../Order'
+import { v4 as uuidv4} from "uuid"
 
 //Note:In React with TypeScript, when handling input changes, you can use the React.ChangeEvent<T> event type, 
 // where T represents the type of the input element. The specific type for each input element can vary depending 
@@ -25,7 +26,7 @@ export default function AddOrder() {
   // handling multi-line forms with one single handleChange function for each input type
   // https://www.pluralsight.com/guides/handling-multiple-inputs-with-single-onchange-handler-react
   const [state, setState] = useState({
-    id: 0,
+    id: '',
     ourClient: '',
     quantity: 0,
     charge: 0,
@@ -81,7 +82,7 @@ export default function AddOrder() {
         <h1>New Order</h1>
 
         <label htmlFor='id'>ID</label>
-        <input type='number' id='id' name='id' min='1' max='1000000' value={state.id} onChange={handleChange} required></input>
+        <input type='text' id='id' name='id' value={uuidv4()} onChange={handleChange} required></input>
 
         <label htmlFor='ourClient'>Our client</label>
         <input type='text' id='ourClient' name='ourClient' value={state.ourClient} onChange={handleChange} required></input>
