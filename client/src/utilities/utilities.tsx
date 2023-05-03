@@ -11,7 +11,7 @@ export const stage_1 = ['unpaid', 'In hous', 'Ready to start']
 export const stage_2 = ['paid', 'Processing', 'On the way']
 export const stage_3 = ['Fulfilled', 'Delivered']
 
-export const dateFormater = (date) => {
+export const dateFormater = (date: Date) => {
   const d = new Date(date)
   return d.toLocaleDateString()
 }
@@ -22,6 +22,6 @@ const CURRENCY_FORMATTER = new Intl.NumberFormat(undefined, {
   style: "currency",
 })
 
-export function formatCurrency(number) {
+export function formatCurrency(number: number) {
   return CURRENCY_FORMATTER.format(number)
 }
