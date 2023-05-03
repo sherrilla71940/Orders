@@ -32,14 +32,16 @@ const getOrders = async (req, res) => {
 
 const postOrder = (req, res) => {
   console.log("reached the controller", req.body);
+  console.log(req.body);
   try {
     const order = postOne(req.body);
+    console.log(order);
     res.status(201);
-    res.send(order);
+    res.json(order);
   } catch (error) {
     console.log(error);
     res.status(400);
-    res.send("stuck in controller");
+    res.json("stuck in controller");
   }
 };
 
@@ -59,11 +61,11 @@ const signUp = async (req, res) => {
   try {
     responseUser = await createUser(email, password);
     // console.log('responseuser', responseUser)
-    console.log("successful signup");
-    console.log("log responseUser", responseUser);
-    console.log(email, password);
+    // console.log("successful signup");
+    // console.log("log responseUser", responseUser);
+    // console.log(email, password);
     if (responseUser._id) {
-      console.log("entered if, user is saved");
+      // console.log("entered if, user is saved");
       const token = createToken(responseUser._id);
       res.status(201);
       res.cookie("jwt", token, {
@@ -95,11 +97,11 @@ const logIn = async (req, res) => {
     const response = await logInUser(email, password);
 
     if (response._id) {
-      console.log("found id");
+      // console.log("found id");
 
       res.status(200);
       const token = createToken(response._id);
-      console.log("created token");
+      // console.log("created token");
       res.cookie("jwt", token, {
         httpOnly: true,
         sameSite: "strict",

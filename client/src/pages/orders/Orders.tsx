@@ -16,6 +16,7 @@ export default function () {
   useEffect(() => {
     fetch("http://localhost:3000/orders", {
       method: "GET",
+      mode: "cors",
       headers: {
         "Content-type": "application/json",
       },
@@ -33,7 +34,7 @@ export default function () {
       .catch((error) => {
         console.log("Catched error: ", error);
       });
-  }, []);
+  });
 
   return (
     <div className={styles.container}>
