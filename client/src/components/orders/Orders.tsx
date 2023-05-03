@@ -1,7 +1,7 @@
 import styles from './Orders.module.css'
 import { useSelector, useDispatch } from "react-redux";
 import { updateOrder } from "../../store/actions";
-// import Order from '../../Order'
+import Order from '../../Order'
 
 import {
   dateFormater,
@@ -13,39 +13,47 @@ import {
   stage_3,
   formatCurrency
 } from '../../utilities/utilities'
+import { Value } from '@radix-ui/react-select';
 
+type idAndProcess = {
+  id: number,
+  payment?: string,
+  fullfilment?: string,
+  delivery?: string
+}
 
 export default function Orders() {
 
   const dispatch = useDispatch()
 
-  // use to change the color in the select HTML tag. Not yet implemented
-  // const handleClass = (e: React.ChangeEvent<HTMLInputElement> ) => {
-  //   const value = e.target.value
-
-  //   if (stage_1.includes(value)) {
-  //     e.target.classList.add(`${styles.bg_stage_1}`)
-  //     e.target.classList.remove(`${styles.bg_stage_2}`)
-  //     e.target.classList.remove(`${styles.bg_stage_3}`)
-  //   }
-  //   if (stage_2.includes(value)) {
-  //     e.target.classList.add(`${styles.bg_stage_2}`)
-  //     e.target.classList.remove(`${styles.bg_stage_1}`)
-  //     e.target.classList.remove(`${styles.bg_stage_3}`)
-  //   }
-  //   if (stage_3.includes(value)) {
-  //     e.target.classList.add(`${styles.bg_stage_3}`)
-  //     e.target.classList.remove(`${styles.bg_stage_1}`)
-  //     e.target.classList.remove(`${styles.bg_stage_2}`)
-  //   }
-  //   // console.log(e.target.classList)
-  // }
+  // use to change the color in the select HTML tag. Partially implemented, labeled colors are not persisting
+  const handleClass = (e: React.ChangeEvent<HTMLSelectElement> ) => {
+  // const handleClass = (e) => {
+    const value = e.target.value
+    console.log(Value)
+    if (stage_1.includes(value)) {
+      e.target.classList.add(`${styles.bg_stage_1}`)
+      e.target.classList.remove(`${styles.bg_stage_2}`)
+      e.target.classList.remove(`${styles.bg_stage_3}`)
+    }
+    if (stage_2.includes(value)) {
+      e.target.classList.add(`${styles.bg_stage_2}`)
+      e.target.classList.remove(`${styles.bg_stage_1}`)
+      e.target.classList.remove(`${styles.bg_stage_3}`)
+    }
+    if (stage_3.includes(value)) {
+      e.target.classList.add(`${styles.bg_stage_3}`)
+      e.target.classList.remove(`${styles.bg_stage_1}`)
+      e.target.classList.remove(`${styles.bg_stage_2}`)
+    }
+   
+  }
 
   // const orders: Order[] = useSelector((state) => state.orders);
-  const orders = useSelector((state) => state.orders);
+  const orders = useSelector((state: any) => state.orders);
  
   const baseUrl = 'http://localhost:3000'
-  const putOrder = async (idAndProcess) => {
+  const putOrder = async (idAndProcess: idAndProcess) => {
       
       const response = await fetch(baseUrl + '/orders', {
         method: "PUT",
@@ -63,46 +71,18 @@ export default function Orders() {
       
       .then(data => {
         dispatch(updateOrder(data))
-        console.log(data)
+        // console.log(data)
       })
       .catch(error => {
         console.log('Catched error: ', error)
       })
-      //  if (response.ok) {
-      //     return await response.json()
-      //   } else {
-      //   throw new Error('unable to fetch data')
-      // }
     }
 
-  const handleChange = async (idAndProcess) => {
-    // console.log(idAndProcess )
+  const handleChange = async (idAndProcess: idAndProcess) => {
+    // console.log(idAndProcess)
     await putOrder(idAndProcess)
   }
  
-    // fetch('http://localhost:3000/orders', {
-    //   method: "PUT",
-    //   body: JSON.stringify(idAndProcess),
-    //   headers: {
-    //     "Content-type": "application/json"
-    //   }
-    // })
-    //   .then(response => {
-    //     if (response.ok) {
-    //       return response.json()
-    //     }
-    //     throw new Error('unable to fetch data')
-    //   })
-      // 
-    //   .then(data => {
-    //     dispatch(updateOrder(data))
-    //     // console.log(data)
-    //   })
-    //   .catch(error => {
-    //     console.log('Catched error: ', error)
-    //   })
-  // }
-
   return (
     <>
       <div className={styles.tableWrapper}>
@@ -123,8 +103,8 @@ export default function Orders() {
           <tbody className={styles.tableBody}>
 
             {
-              // orders.map((order:Order) => (
-              orders.map((order) => (
+              // orders.map((order) => (
+              orders.map((order: Order) => (
                 <tr key={order.id} className={styles.tableRow}>
                   <td>{order.id}</td>
                   <td>{order.ourClient}</td>
@@ -136,9 +116,14 @@ export default function Orders() {
                     <select
                       className={styles.select}
                       name='payment' value={order.payment}
-                      onChange={(e) => handleChange({
-                        id: order.id, payment: e.target.value
-                      })}
+                      onChange={
+                        (e) => {
+                          handleChange({
+                            id: order.id, payment: e.target.value
+                          });
+                          handleClass(e)
+                        }
+                      }
                     >
                       {payment_status.map(status => (
                         <option key={status.id} value={status.status}>{status.status}</option>
@@ -150,9 +135,14 @@ export default function Orders() {
                     <select
                       className={styles.select}
                       name='fullfilment' value={order.fullfilment}
-                      onChange={(e) => handleChange({
-                        id: order.id, fullfilment: e.target.value
-                      })}
+                      onChange={
+                        (e) => {
+                          handleChange({
+                            id: order.id, fullfilment: e.target.value
+                          });
+                          handleClass(e)
+                        }
+                      }
                     >
                       {fullfilment_status.map(status => (
                         <option key={status.id} value={status.status}>{status.status}</option>
@@ -172,7 +162,7 @@ export default function Orders() {
                         handleChange({
                           id: order.id, delivery: e.target.value
                         });
-                        // handleClass(e)
+                        handleClass(e)
                       }
                     }
                   >
