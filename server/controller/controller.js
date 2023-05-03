@@ -37,7 +37,7 @@ const postOrder = (req, res) => {
 const putOrder = async (req, res) => {
   try {
     const order = await updateOne(req.body)
-    // res.send(order)
+    res.send(order)
   } catch (error) {
     console.log(error)
   }

@@ -82,9 +82,10 @@ const updateOne = async (idAndProcess) => {
     const filter = {id: idAndProcess.id}
     const process = Object.keys(idAndProcess)[1];
     const update = { [process]: idAndProcess[process] }
-    console.log(filter, update)
-    await Orders.findOneAndUpdate(filter, update)
-    const updatedOrder = await findOne(filter)
+    // console.log(filter, update)
+    const updatedOrder = await Orders.findOneAndUpdate(filter, update, {new: true})
+    // const updatedOrder = await Orders.findOne(filter)
+    console.log(updatedOrder)
     return updatedOrder
   } catch (err) {
     console.log(err)
